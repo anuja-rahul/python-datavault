@@ -34,5 +34,5 @@ class MetadataHandler:
     def update_metadata(self):
         if self.__temp_filename not in self.__filenames:
             self.__filenames.append(self.__temp_filename)
-        if self.__temp_password not in
-        self.__passwords.append(self.__temp_password)
+        if self.__temp_password not in self.__passwords:
+            self.__passwords.append(self.__temp_password)
