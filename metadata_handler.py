@@ -1,4 +1,5 @@
 import json
+from datalogger import DataLogger
 
 
 class MetadataHandler:
@@ -20,10 +21,12 @@ class MetadataHandler:
         self.__json_data["filenames"] = self.__filenames
         self.__json_data["password"] = self.__password
 
+    @DataLogger.logger
     def __dump_to_json(self):
         with open(MetadataHandler.__metadata_file, 'w') as file:
             file.write(json.dumps(self.__json_data, indent=2))
 
+    @DataLogger.logger
     def __load_from_json(self):
         with open(MetadataHandler.__metadata_file, 'r') as file:
             self.__json_data = json.loads(file.read())
@@ -31,8 +34,14 @@ class MetadataHandler:
         self.__filenames = self.__json_data["filenames"]
         self.__password = self.__json_data["password"]
 
-    def update_metadata(self):
+    def __update_metadata(self):
         if self.__temp_filename not in self.__filenames:
             self.__filenames.append(self.__temp_filename)
         if self.__temp_password not in self.__passwords:
             self.__passwords.append(self.__temp_password)
+
+    def save_metadata(self):
+        self.__load_from_json()
+        self.__update_metadata()
+        self.__dump_to_json()
+
