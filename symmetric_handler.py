@@ -34,4 +34,3 @@ class SymmetricHandler:
     def __type_check(value):
         if isinstance(value, bytes):
             return True
-

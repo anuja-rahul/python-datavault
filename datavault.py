@@ -1,4 +1,4 @@
 
 
-class DAtaVault:
+class DataVault:
     pass
