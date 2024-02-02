@@ -1,6 +1,6 @@
 import os
 import json
-from datalogger import DataLogger
+from python_datalogger import DataLogger
 
 
 class MetadataHandler:
