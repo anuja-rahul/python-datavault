@@ -22,8 +22,8 @@ class MetadataHandler:
 
         self.save_metadata()
 
-    @staticmethod
-    def init_env():
+    @classmethod
+    def init_env(cls):
         if MetadataHandler.__metadata_file not in MetadataHandler.__temp_files:
             with open(MetadataHandler.__metadata_file, "w") as file:
                 file.write(json.dumps(MetadataHandler.__template_file, indent=2))
