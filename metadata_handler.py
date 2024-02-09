@@ -11,12 +11,14 @@ class MetadataHandler:
     }
     __temp_files = os.listdir()
 
-    def __init__(self, filename: str, password: str):
+    def __init__(self, filename: str, password: str, status: str):
         self.init_env()
 
         self.__temp_filename = filename
         self.__temp_password = password
-        self.__temp_array = {"filename": self.__temp_filename, "password": self.__temp_password}
+        self.__status = status
+        self.__temp_array = {"filename": self.__temp_filename, "password": self.__temp_password,
+                             "status": self.__status}
         self.__current_array = []
         self.__json_data = {}
 
@@ -43,7 +45,16 @@ class MetadataHandler:
 
     @DataLogger.logger
     def __update_metadata(self):
-        if self.__temp_array not in self.__current_array:
+        if len(self.__current_array) > 0:
+            for arrays in self.__current_array:
+                if (not arrays['filename'] == self.__temp_array['filename'] and
+                        arrays['password'] == self.__temp_array['password']):
+                    self.__current_array.append(self.__temp_array)
+                else:
+                    if arrays['status'] != self.__temp_array['status']:
+                        self.__current_array.remove(arrays)
+                        self.__current_array.append(self.__temp_array)
+        else:
             self.__current_array.append(self.__temp_array)
 
         self.__json_data["FileData"] = self.__current_array
